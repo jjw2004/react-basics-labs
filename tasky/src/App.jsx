@@ -6,11 +6,18 @@ function App() {
   // Initialize state with an array of task objects
   const [taskState, setTaskState] = useState({
     tasks: [
-      { id: 1, title: "Dishes", description: "Empty dishwasher", deadline: "Today", priority: "medium" },
-      { id: 2, title: "Laundry", description: "Fold clothes and put away", deadline: "Tomorrow", priority: "low" },
-      { id: 3, title: "Tidy up", deadline: "Today", priority: "high" }
+      { id: 1, title: "Dishes", description: "Empty dishwasher", deadline: "Today", priority: "medium", done: false },
+      { id: 2, title: "Laundry", description: "Fold clothes and put away", deadline: "Tomorrow", priority: "low", done: false },
+      { id: 3, title: "Tidy up", description: "Clean living room", deadline: "Today", priority: "high", done: false }
     ]
   });
+
+  const doneHandler = (taskIndex) => {
+    const tasks = [...taskState.tasks];
+    tasks[taskIndex].done = !tasks[taskIndex].done;
+    setTaskState({tasks});
+    console.log(`${taskIndex} ${tasks[taskIndex].done}`);
+  }
 
 
   return (
@@ -24,6 +31,8 @@ function App() {
           description={task.description}
           deadline={task.deadline}
           priority={task.priority}
+          done={task.done}
+          markDone={() => doneHandler(index)}
         />
       ))}
     </div>
