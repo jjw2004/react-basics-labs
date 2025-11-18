@@ -61,9 +61,16 @@ function App() {
     event.preventDefault();
     const tasks = taskState.tasks?[...taskState.tasks]:[];
     const form = {...formState};
-    const newTask = await addTask(form);
-    tasks.push(newTask);
-    setTaskState({tasks});
+    try {
+      const newTask = await addTask(form);
+      tasks.push(newTask);
+      setTaskState({tasks});
+      // clear form
+      setFormState({title: "", description: "", deadline: "", priority: "Low"});
+    } catch (err) {
+      console.error('Failed to add task', err);
+      alert('Failed to add task: ' + (err.message || err));
+    }
   }
 
 
