@@ -19,6 +19,8 @@ function App() {
     deadline: "",
     priority: "Low"
   });
+  
+  //console.log(formState);
 
   const doneHandler = (taskIndex) => {
     const tasks = [...taskState.tasks];
@@ -50,7 +52,7 @@ function App() {
           break;
       case "priority":
           form.priority = event.target.value;
-          break;
+          break;      
       default:
           form = formState;
     }
@@ -61,16 +63,9 @@ function App() {
     event.preventDefault();
     const tasks = taskState.tasks?[...taskState.tasks]:[];
     const form = {...formState};
-    try {
-      const newTask = await addTask(form);
-      tasks.push(newTask);
-      setTaskState({tasks});
-      // clear form
-      setFormState({title: "", description: "", deadline: "", priority: "Low"});
-    } catch (err) {
-      console.error('Failed to add task', err);
-      alert('Failed to add task: ' + (err.message || err));
-    }
+    const newTask = await addTask(form);
+    tasks.push(newTask);
+    setTaskState({tasks});
   }
 
 
